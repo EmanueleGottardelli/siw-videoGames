@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>SiwVideogames - Nuovo Videogame</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-light">
+
+	<!-- Navbar -->
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+		<div class="container-fluid">
+			<a class="navbar-brand" th:href="@{/}">SiwVideogames</a>
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+				aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarNav">
+				<ul class="navbar-nav ms-auto">
+					<li class="nav-item">
+						<a class="nav-link" th:href="@{/videogame}">Catalogo</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" th:href="@{/developer}">Developers</a>
+					</li>
+					<li class="nav-item">
+						<div th:if="${userDetails}">
+							<span class="navbar-text text-white me-3" th:text="${userDetails.username}"></span>
+							<a class="btn btn-outline-light" href="/logout">Logout</a>
+						</div>
+						<div th:unless="${userDetails}">
+							<a class="btn btn-outline-light" href="/login">Login</a>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<!-- Form nuovo videogame -->
+	<main class="container d-flex justify-content-center align-items-center mt-5">
+		<div class="card shadow-lg p-4 w-100" style="max-width: 600px;">
+			<h1 class="text-center mb-4">Aggiungi un nuovo videogame</h1>
+
+			<!-- Messaggio di errore -->
+			<div th:if="${messaggioErrore}" class="alert alert-danger text-center mb-4">
+				<span th:text="${messaggioErrore}">Errore</span>
+			</div>
+
+			<form th:action="@{/admin/videogame}" th:object="${videogame}" method="POST">
+				<div class="mb-3">
+					<label for="title" class="form-label">Titolo</label>
+					<input type="text" class="form-control" id="title" placeholder="Titolo" required
+						th:field="*{title}">
+				</div>
+
+				<div class="mb-3">
+					<label for="genre" class="form-label">Genere</label>
+					<input type="text" class="form-control" id="genre" placeholder="genere" required
+						th:field="*{genre}">
+				</div>
+
+				<div class="mb-3">
+					<label for="releaseDate" class="form-label">Data di uscita</label>
+					<input type="date" class="form-control" id="releaseDate" placeholder="Data di uscita" required
+						th:field="*{releaseDate}">
+				</div>
+
+				<div class="mb-3">
+					<label for="platform" class="form-label">Piattaforma</label>
+					<input type="text" class="form-control" id="platform" placeholder="Piattaforma" required
+						th:field="*{platform}">
+				</div>
+
+				<div class="mb-3">
+					<label for="description" class="form-label">Descrizione</label>
+					<input type="text" class="form-control" id="description" placeholder="Descrizione" required
+						th:field="*{description}">
+				</div>
+
+				<div class="mb-3">
+					<label for="coverUrl" class="form-label">Cover url</label>
+					<input type="url" class="form-control" id="coverUrl" placeholder="Cover url"
+						th:field="*{coverUrl}">
+				</div>
+
+				<div class="mb-3">
+				    <label class="form-label">Developers</label>
+				    <div class="form-check" th:each="developer : ${developers}">
+				        <input class="form-check-input" type="checkbox"
+				               th:field="*{developers}"
+				               th:value="${developer.id}"
+				               th:id="'developer__' + ${developer.id}">
+				        <label class="form-check-label"
+				               th:for="'developer__' + ${developer.id}"
+				               th:text="${developer.name}"></label>
+				    </div>
+				</div>
+
+				<div class="mb-3">
+				    <label class="form-label">Publisher</label>
+				    <div class="form-check" th:each="developer : ${developers}">
+				        <input class="form-check-input" type="radio"
+				               th:field="*{publisher}"
+				               th:value="${developer.id}"
+				               th:id="'publisher__' + ${developer.id}">
+				        <label class="form-check-label"
+				               th:for="'publisher__' + ${developer.id}"
+				               th:text="${developer.name}"></label>
+				    </div>
+				</div>
+
+				<div class="d-grid">
+					<button type="submit" class="btn btn-success btn-lg">Aggiungi</button>
+				</div>
+			</form>
+		</div>
+	</main>
+
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

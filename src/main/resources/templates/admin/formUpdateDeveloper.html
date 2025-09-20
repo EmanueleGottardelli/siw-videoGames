@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>SiwVideogames - Modifica Developer</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-light">
+	<div class="container mt-5">
+		<h1 class="mb-4">Modifica Developer</h1>
+
+		<!-- Modifica dati Developer -->
+		<h3>Modifica informazioni Developer</h3>
+		<form th:action="@{'/admin/updateDeveloper/' + ${developer.id}}" th:object="${developer}" method="POST">
+			<div class="mb-3">
+				<label for="name" class="form-label">Nome</label>
+				<input id="name" type="text" class="form-control" th:field="*{name}" required>
+			</div>
+			<div class="mb-3">
+				<label for="nationality" class="form-label">Nazionalità</label>
+				<input id="nationality" type="text" class="form-control" th:field="*{nationality}" required>
+			</div>
+			<div class="mb-3">
+				<label for="dateOfBirth" class="form-label">Data di nascita</label>
+				<input id="dateOfBirth" type="date" class="form-control" th:field="*{dateOfBirth}" required>
+			</div>
+
+			<!-- Videogiochi sviluppati -->
+			<div class="mb-3">
+				<label class="form-label">Videogiochi sviluppati</label>
+				<div th:each="game : ${videogames}">
+					<div class="form-check">
+						<input class="form-check-input" type="checkbox" th:id="'developed-' + ${game.id}"
+							th:name="videogamesDeveloped" th:value="${game.id}"
+							th:checked="${developer.gamesDeveloped.contains(game)}">
+						<label class="form-check-label" th:for="'developed-' + ${game.id}"
+							th:text="${game.title}"></label>
+					</div>
+				</div>
+			</div>
+
+			<!-- Videogiochi pubblicati -->
+			<div class="mb-3">
+				<label class="form-label">Videogiochi pubblicati</label>
+				<div th:each="game : ${videogames}">
+					<div class="form-check">
+						<input class="form-check-input" type="checkbox" th:id="'published-' + ${game.id}"
+							th:name="videogamesPublished" th:value="${game.id}"
+							th:checked="${developer.gamesPublished.contains(game)}">
+						<label class="form-check-label" th:for="'published-' + ${game.id}"
+							th:text="${game.title}"></label>
+					</div>
+				</div>
+			</div>
+
+			<button type="submit" class="btn btn-success">Salva modifiche</button>
+		</form>
+
+	</div>
+</body>
+
+</html>
