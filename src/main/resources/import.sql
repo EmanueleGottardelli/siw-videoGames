@@ -7,7 +7,7 @@ INSERT INTO developer (id,name, nationality, date_of_birth) VALUES (nextval('dev
 INSERT INTO developer (id,name, nationality, date_of_birth) VALUES (nextval('developer_seq'),'Activision','USA','1979-10-01');
 
 -- Inserimento videogame
-INSERT INTO videogame (id,title, release_date, genre, platform, description, image_file_name, publisher_id) VALUES (nextval('videogame_seq'),'Fifa 15', '2014-09-19','Sportivo','Console','Gioco di simulazione calcistica','fifa_15_pic',51)
+INSERT INTO videogame (id,title, release_date, genre, platform, description, publisher_id) VALUES (nextval('videogame_seq'),'Fifa 15', '2014-09-19','Sportivo','Console','Gioco di simulazione calcistica',51)
 INSERT INTO videogame (id,title, release_date, genre, platform, description, publisher_id) VALUES (nextval('videogame_seq'),'COD 4', '2007-11-05','Sparatutto','Console','Simulazione di guerra',1);
 
 -- Inserimento credenziali

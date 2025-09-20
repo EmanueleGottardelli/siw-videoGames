@@ -1,6 +1,7 @@
 package it.uniroma3.siw.controller;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -38,6 +39,32 @@ public class VideogameController {
 	@Autowired
 	private DeveloperService developerService;
 	
+	@GetMapping("/searchVideogames")
+	public String searchVideogames(@RequestParam(required = false) String title,
+								   @RequestParam(required = false) String genre,
+								   @RequestParam(required = false) String platform,
+								   @RequestParam(required = false) LocalDate releaseDate,
+								   Model model) {
+		List<Videogame> result = new ArrayList<>();
+		
+		if(title != null && !title.isBlank()) {
+			result.addAll(videogameService.getVideoGameByTitle(title));
+		}
+		if(genre != null && !genre.isBlank()) {
+			result.addAll(videogameService.getVideoGamesByGenre(genre));
+		}
+		if(platform!=null && !platform.isBlank()) {
+			result.addAll(videogameService.getVideogamesByPlatform(platform));
+		}
+		if(releaseDate != null) {
+			result.addAll(videogameService.getVideoGamesByReleaseDate(releaseDate));
+		}
+		
+		model.addAttribute("result", result);
+		
+		return "searchVideogamesResult";
+	}
+	
 	@GetMapping(value="/admin/formUpdateVideogame/{id}")
 	public String formUpdateVideogame(@PathVariable("id") Long id, Model model) {
 		model.addAttribute("videogame", videogameService.getVideogameById(id));
@@ -73,9 +100,6 @@ public class VideogameController {
 	    if (updatedVideogame.getPlatform() != null && !updatedVideogame.getPlatform().isBlank()) {
 	    	videogame.setPlatform(updatedVideogame.getPlatform());
 	    }
-//	    if(updatedVideogame.getCoverUrl() != null && !updatedVideogame.getCoverUrl().isBlank()) {
-//	    	videogame.setCoverUrl(updatedVideogame.getCoverUrl());
-//	    }
 	    
 	    // sostituisco la lista dei developer
 	    List<Developer> newDevs = new ArrayList<>();

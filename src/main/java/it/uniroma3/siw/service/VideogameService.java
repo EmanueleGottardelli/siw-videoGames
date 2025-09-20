@@ -49,6 +49,10 @@ public class VideogameService {
 	public List<Videogame> getVideoGamesByGenre(String genre) {
 		return this.videogameRepository.findByGenre(genre);
 	}
+	
+	public List<Videogame> getVideogamesByPlatform(String platform){
+		return this.videogameRepository.findByPlatform(platform);
+	}
 
 	public List<Videogame> getVideoGamesByReleaseDate(LocalDate releaseDate) {
 		return this.videogameRepository.findByReleaseDate(releaseDate);

@@ -1,5 +1,6 @@
 package it.uniroma3.siw.controller;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -32,6 +33,25 @@ public class DeveloperController {
 
 	@Autowired
 	private VideogameService videogameService;
+	
+	@GetMapping("/searchDevelopers")
+	public String searchDevelopers(@RequestParam(required = false) String name,
+								   @RequestParam(required = false) String nationality,
+								   Model model) {
+		
+		List<Developer> result = new ArrayList<>();
+		
+		if(name != null && !name.isBlank()) {
+			result.addAll(developerService.getDeveloperByName(name));
+		}
+		if(nationality != null && !name.isBlank()) {
+			result.addAll(developerService.getDeveloperByNationality(nationality));
+		}
+		
+		model.addAttribute("result", result);
+		
+		return "searchDevelopersResult";
+	}
 
 	@GetMapping("/admin/formUpdateDeveloper/{id}")
 	public String formUpdateDeveloper(@PathVariable("id") Long id, Model model) {
