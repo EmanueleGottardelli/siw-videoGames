@@ -39,6 +39,7 @@ public class AuthenticationController {
 	public String showRegisterForm(Model model) {
 		model.addAttribute("user", new User());
 		model.addAttribute("credentials", new Credentials());
+		
 		return "formRegister";
 	}
 	
@@ -50,6 +51,7 @@ public class AuthenticationController {
 	@GetMapping("/success")
 	public String defaultAfterLogin(Model model) {
 		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//		model.addAttribute("videogames", videogameService.getAllVideoGame());
 		Credentials credentials = credentialsService.getCredentials(userDetails.getUsername());
 		if(credentials.getRole().equals(Credentials.ADMIN_ROLE)) {
 			return "admin/indexAdmin";
@@ -61,6 +63,7 @@ public class AuthenticationController {
 	@GetMapping(value="/")
 	public String index(Model model) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//		model.addAttribute("videogames", videogameService.getAllVideoGame());
 		if(authentication instanceof AnonymousAuthenticationToken) {
 			return "index";
 		} else {
@@ -70,6 +73,7 @@ public class AuthenticationController {
 				return "admin/indexAdmin";
 			}
 		}
+		
 		return "index";
 	}
 	

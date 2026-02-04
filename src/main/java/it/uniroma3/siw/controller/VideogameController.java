@@ -117,7 +117,7 @@ public class VideogameController {
 	    
 	    videogameService.saveVideogame(videogame);
 	    
-	    return "redirect:/videogame/" + id;
+	    return "redirect:/manageVideogames";
 	}
 	
 	@PostMapping("/admin/deleteVideogame/{id}")

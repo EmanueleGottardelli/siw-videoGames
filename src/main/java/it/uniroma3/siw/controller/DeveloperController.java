@@ -77,22 +77,38 @@ public class DeveloperController {
 		if (updatedDeveloper.getDateOfBirth() != null) {
 			developer.setDateOfBirth(updatedDeveloper.getDateOfBirth());
 		}
+		
+		for(Videogame g : developer.getGamesDeveloped()) {
+			g.getDevelopers().remove(developer);
+		}
+		developer.getGamesDeveloped().clear();
 
 		// riscrivo completamente la lista dei giochi
 		Set<Videogame> developed = new HashSet<>();
 		if (videogamesDeveloped != null) {
 			for (Long vId : videogamesDeveloped) {
-				developed.add(videogameService.getVideogameById(vId));
+				Videogame game = videogameService.getVideogameById(vId);
+	            developer.getGamesDeveloped().add(game);
+	            game.getDevelopers().add(developer);
+	            videogameService.saveVideogame(game);
 			}
 			
 		}
 		developer.setGamesDeveloped(developed);
 		
+		for(Videogame g : developer.getGamesPublished()) {
+			g.setPublisher(null);
+		}
+		developer.getGamesPublished().clear();
+		
 		// anche qui riscrivo comletamente la lista 
 		Set<Videogame> published = new HashSet<>();
 		if (videogamesPublished != null) {
 			for (Long vId : videogamesPublished) {
-				published.add(videogameService.getVideogameById(vId));
+				Videogame game = videogameService.getVideogameById(vId);
+				game.setPublisher(updatedDeveloper); 
+				published.add(game);
+				videogameService.saveVideogame(game);
 			}
 			
 		}
@@ -100,7 +116,7 @@ public class DeveloperController {
 		
 		developerService.saveDeveloper(developer);
 
-		return "redirect:/developer";
+		return "redirect:/manageDevelopers";
 	}
 
 	@GetMapping(value = "/admin/indexDeveloper")

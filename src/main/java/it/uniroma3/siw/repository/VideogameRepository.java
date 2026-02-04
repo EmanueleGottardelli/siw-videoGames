@@ -16,5 +16,5 @@ public interface VideogameRepository extends CrudRepository<Videogame,Long>{
 	
 	public List<Videogame> findAllByOrderByReleaseDateDesc();
 	
-	public boolean existsByTitleAndReleaseDateAndGenre(String title, LocalDate releaseDate,String genre);
+	public boolean existsByTitleAndReleaseDateAndGenre(String title, LocalDate releaseDate, String genre);
 }
