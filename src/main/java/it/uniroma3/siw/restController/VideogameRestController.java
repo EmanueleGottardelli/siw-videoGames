@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -32,7 +31,7 @@ public class VideogameRestController {
 	@GetMapping(value = "/rest/searchVideogames")
 	public List<Videogame> searchVideogames(@RequestParam(required = false) String title,
 			@RequestParam(required = false) String genre, @RequestParam(required = false) String platform,
-			@RequestParam(required = false) LocalDate releaseDate, Model model) {
+			@RequestParam(required = false) LocalDate releaseDate) {
 		List<Videogame> result = new ArrayList<>();
 
 		if (title != null && !title.isBlank()) {

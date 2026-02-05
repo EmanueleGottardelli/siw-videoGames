@@ -28,14 +28,14 @@ public class DeveloperRestController {
 	}
 
 	@GetMapping(value = "/rest/searchDevelopers")
-	public List<Developer> searchVideogames(@RequestParam(required = false) String name,
+	public List<Developer> searchDevelopers(@RequestParam(required = false) String name,
 			@RequestParam(required = false) String nationality) {
-		
+
 		List<Developer> result = new ArrayList<>();
-		if(name != null && !name.isBlank()) {
+		if (name != null && !name.isBlank()) {
 			result.addAll(developerService.getDeveloperByName(name));
 		}
-		if(nationality != null && !nationality.isBlank()) {
+		if (nationality != null && !nationality.isBlank()) {
 			result.addAll(developerService.getDeveloperByNationality(nationality));
 		}
 		return result;
